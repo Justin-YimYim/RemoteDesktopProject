@@ -1,10 +1,10 @@
 #pragma once
 
-#include "pch.h"
-#include "UniqueResource.h"
-
 #ifndef SOCKET_DELETER
 #define SOCKET_DELETER
+
+#include "pch.hpp"
+#include "UniqueResource.hpp"
 
 namespace RemoteDesk {
 	

@@ -1,8 +1,10 @@
 #include <iostream>
-#include "pch.h"
-#include "WinSockLib.h"
-#include "SafeSocket.h"
-#include "TCPSocket.h"
+#include "pch.hpp"
+#include "WinSockLib.hpp"
+#include "TCPSocket.hpp"
+#include "TCPAcceptor.hpp"
+#include "TCPResolver.hpp"
+#include "TCPStream.hpp"
 
 using namespace std;
 
@@ -16,42 +18,30 @@ int WINAPI wWinMain(_In_   HINSTANCE hInstance,
 
     RemoteDesk::WinsockLib winsockLib{};
 
-    RemoteDesk::TCPSocket listener{};
+    RemoteDesk::TCPSocket socket{};
 
-    sockaddr_in addr{};
-    addr.sin_family = AF_INET;
-    addr.sin_port = htons(2302);
-    addr.sin_addr.S_un.S_addr = htonl(INADDR_ANY);
+    auto results = RemoteDesk::TCPResolver::Resolve("google.com", "80");
+    auto endpoint = results.GetEndpoint();
 
-    listener.Bind(addr);
-    listener.Listen();
+    std::vector<std::byte> pageData{};
+    pageData.resize(1024 * 1024 * 20);
+
+    RemoteDesk::TCPStream stream(socket);
+
+    std::string request{ "GET / HTTP/1.0\r\nHost: google.com\r\nUser-Agent: RemoteDesk\r\n\r\n" };
+
+    try {
+        if (!socket.Connect(endpoint, std::nothrow)) throw std::runtime_error("Cannot connect");
+        if (socket.Send(request.data(), request.size(), std::nothrow) == SOCKET_ERROR) throw std::runtime_error("Cannot Send");
+
+        stream.Receive(pageData);
+    }catch(exception& ex){
+        MessageBoxA(nullptr, ex.what(), "Exception Throw", MB_OK);
+    }
 
 
-    std::jthread clientThread([]() 
-        {
-            RemoteDesk::TCPSocket socket{};
-        
-            sockaddr_in addr{};
-            addr.sin_family = AF_INET;
-            addr.sin_port = htons(2302);
-            addr.sin_addr.S_un.S_addr = htonl(INADDR_LOOPBACK);
-
-            socket.Connect(addr);
-
-            std::string message = "Hello World";
-            socket.Send(message);
-
-            message = socket.Receive(10);
-            if (message.empty()) {
-                MessageBoxA(nullptr, "Disconnected", "", MB_OK);
-            }
-        });
-
-    RemoteDesk::TCPSocket client = listener.Accept();
-    std::string message = client.Receive(12);
-    MessageBoxA(nullptr, message.c_str(), "Message!", MB_OK);
-
-    client.ShutDown();
+    std::ofstream file("file.txt", std::ios::binary);
+    file.write((char*)pageData.data(), 1024 * 20);
 
     return 0;
 }

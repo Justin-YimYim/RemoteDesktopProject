@@ -16,11 +16,11 @@
     <Filter Include="pch">
       <UniqueIdentifier>{cdcf7972-cd71-4674-92fa-d82104af7d03}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Networking">
-      <UniqueIdentifier>{be79b953-f63a-4492-8398-5b301efbd88a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utility">
       <UniqueIdentifier>{d9f9b2ee-c6a6-4642-b5e8-18e12bc613f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Networking">
+      <UniqueIdentifier>{be79b953-f63a-4492-8398-5b301efbd88a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -36,30 +36,42 @@
     <ClCompile Include="src\TCPServer.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
-    <ClCompile Include="src\SafeSocket.cpp">
-      <Filter>Networking</Filter>
-    </ClCompile>
     <ClCompile Include="src\TCPSocket.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\pch.h">
-      <Filter>pch</Filter>
-    </ClInclude>
-    <ClInclude Include="src\WinSockLib.h">
+    <ClInclude Include="src\WinSockLib.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
-    <ClInclude Include="src\TCPServer.h">
+    <ClInclude Include="src\TCPServer.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
-    <ClInclude Include="src\UniqueResource.h">
+    <ClInclude Include="src\SafeSocket.hpp">
+      <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TCPSocket.hpp">
+      <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NonCopyable.hpp">
       <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="src\SafeSocket.h">
+    <ClInclude Include="src\pch.hpp">
+      <Filter>pch</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UniqueResource.hpp">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TCPAcceptor.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
-    <ClInclude Include="src\TCPSocket.h">
+    <ClInclude Include="src\TCPClient.hpp">
+      <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TCPResolver.hpp">
+      <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TCPStream.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
   </ItemGroup>

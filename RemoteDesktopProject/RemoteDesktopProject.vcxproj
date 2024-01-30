@@ -25,6 +25,7 @@
     <ProjectGuid>{094393e2-fbab-408d-b65b-60f4ee54db5b}</ProjectGuid>
     <RootNamespace>RemoteDesktopProject</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <CppWinRTEnableLegacyCoroutines>false</CppWinRTEnableLegacyCoroutines>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -74,18 +75,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configurations)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configurations)\</IntDir>
+    <SourcePath>C:\Users\user\Documents\RemoteDesktopProject\RemoteDesktopProject\src;$(SourcePath)</SourcePath>
+    <IncludePath>C:\Users\user\Documents\RemoteDesktopProject\RemoteDesktopProject\src;C:\Users\user\Documents\RemoteDesktopProject\RemoteDesktopProject\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configurations)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configurations)\</IntDir>
+    <SourcePath>C:\Users\user\Documents\RemoteDesktopProject\RemoteDesktopProject\src;$(SourcePath)</SourcePath>
+    <IncludePath>C:\Users\user\Documents\RemoteDesktopProject\RemoteDesktopProject\src;C:\Users\user\Documents\RemoteDesktopProject\RemoteDesktopProject\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configurations)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configurations)\</IntDir>
+    <SourcePath>C:\Users\user\Documents\RemoteDesktopProject\RemoteDesktopProject\src;$(SourcePath)</SourcePath>
+    <IncludePath>C:\Users\user\Documents\RemoteDesktopProject\RemoteDesktopProject\src;C:\Users\user\Documents\RemoteDesktopProject\RemoteDesktopProject\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configurations)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configurations)\</IntDir>
+    <SourcePath>C:\Users\user\Documents\RemoteDesktopProject\RemoteDesktopProject\src;$(SourcePath)</SourcePath>
+    <IncludePath>C:\Users\user\Documents\RemoteDesktopProject\RemoteDesktopProject\src;C:\Users\user\Documents\RemoteDesktopProject\RemoteDesktopProject\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -93,6 +102,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -108,6 +121,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -123,6 +140,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -138,6 +159,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,7 +173,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\SafeSocket.cpp" />
     <ClCompile Include="src\WinSockLib.cpp" />
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\WinMain.cpp">
@@ -161,12 +185,17 @@
     <ClCompile Include="src\TCPSocket.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\SafeSocket.h" />
-    <ClInclude Include="src\WinSockLib.h" />
-    <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\TCPServer.h" />
-    <ClInclude Include="src\UniqueResource.h" />
-    <ClInclude Include="src\TCPSocket.h" />
+    <ClInclude Include="src\NonCopyable.hpp" />
+    <ClInclude Include="src\SafeSocket.hpp" />
+    <ClInclude Include="src\TCPAcceptor.hpp" />
+    <ClInclude Include="src\TCPClient.hpp" />
+    <ClInclude Include="src\TCPResolver.hpp" />
+    <ClInclude Include="src\TCPStream.hpp" />
+    <ClInclude Include="src\UniqueResource.hpp" />
+    <ClInclude Include="src\WinSockLib.hpp" />
+    <ClInclude Include="src\pch.hpp" />
+    <ClInclude Include="src\TCPServer.hpp" />
+    <ClInclude Include="src\TCPSocket.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
