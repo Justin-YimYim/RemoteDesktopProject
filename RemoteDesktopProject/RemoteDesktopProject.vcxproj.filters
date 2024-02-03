@@ -22,6 +22,9 @@
     <Filter Include="Networking">
       <UniqueIdentifier>{be79b953-f63a-4492-8398-5b301efbd88a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{c7fc5138-be6b-4c61-9253-49af685187f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\WinMain.cpp">
@@ -33,10 +36,10 @@
     <ClCompile Include="src\WinSockLib.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
-    <ClCompile Include="src\TCPServer.cpp">
+    <ClCompile Include="src\Network\TCPServer.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
-    <ClCompile Include="src\TCPSocket.cpp">
+    <ClCompile Include="src\Network\TCPSocket.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,13 +47,13 @@
     <ClInclude Include="src\WinSockLib.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
-    <ClInclude Include="src\TCPServer.hpp">
+    <ClInclude Include="src\Network\TCPServer.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
-    <ClInclude Include="src\SafeSocket.hpp">
+    <ClInclude Include="src\Network\SafeSocket.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
-    <ClInclude Include="src\TCPSocket.hpp">
+    <ClInclude Include="src\Network\TCPSocket.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
     <ClInclude Include="src\NonCopyable.hpp">
@@ -62,17 +65,32 @@
     <ClInclude Include="src\UniqueResource.hpp">
       <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="src\TCPAcceptor.hpp">
+    <ClInclude Include="src\Network\TCPAcceptor.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
-    <ClInclude Include="src\TCPClient.hpp">
+    <ClInclude Include="src\Network\TCPClient.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
-    <ClInclude Include="src\TCPResolver.hpp">
+    <ClInclude Include="src\Network\TCPResolver.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
-    <ClInclude Include="src\TCPStream.hpp">
+    <ClInclude Include="src\Network\TCPStream.hpp">
       <Filter>Networking</Filter>
     </ClInclude>
+    <ClInclude Include="src\Window\WindowClass.hpp">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Network\TCPInterface.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window\SelectionWindow.hpp">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window\WindowInterface.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

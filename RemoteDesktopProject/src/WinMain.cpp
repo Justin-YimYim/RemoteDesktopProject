@@ -1,21 +1,21 @@
 #include <iostream>
 #include "pch.hpp"
 #include "WinSockLib.hpp"
-#include "TCPSocket.hpp"
-#include "TCPAcceptor.hpp"
-#include "TCPResolver.hpp"
-#include "TCPStream.hpp"
+#include "Network/TCPInterface.hpp"
+#include "Window/WindowInterface.hpp"
 
 using namespace std;
 
 int WINAPI wWinMain(_In_   HINSTANCE hInstance,
-                    _In_opt_ HINSTANCE hPrevInstance,
-                    _In_     LPWSTR lpCmdLine,
-                    _In_     int nCmdShow)
+    _In_opt_ HINSTANCE hPrevInstance,
+    _In_     LPWSTR lpCmdLine,
+    _In_     int nCmdShow)
 {
-    UNREFERENCED_PARAMETER(hPrevInstance); 
+    UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
+    // Example of using Socket
+    /*
     RemoteDesk::WinsockLib winsockLib{};
 
     RemoteDesk::TCPSocket socket{};
@@ -41,7 +41,27 @@ int WINAPI wWinMain(_In_   HINSTANCE hInstance,
 
 
     std::ofstream file("file.txt", std::ios::binary);
-    file.write((char*)pageData.data(), 1024 * 20);
+    file.write((char*)pageData.data(), 1024 * 20);*/
 
-    return 0;
+    RemoteDesk::SelectionWindow window{};
+
+    MSG msg{};
+
+    while (GetMessage(&msg, nullptr, 0, 0)) {
+        TranslateMessage(&msg);
+        DispatchMessageW(&msg);
+    }
+
+    if (static_cast<int>(msg.wParam) == 0) {
+        RemoteDesk::SelectionWindow window{};
+
+        MSG msg{};
+
+        while (GetMessage(&msg, nullptr, 0, 0)) {
+            TranslateMessage(&msg);
+            DispatchMessageW(&msg);
+        }
+    }
+
+    return static_cast<int>(msg.wParam);
 }

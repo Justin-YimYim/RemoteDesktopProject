@@ -181,21 +181,28 @@
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp20</LanguageStandard>
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp20</LanguageStandard>
     </ClCompile>
-    <ClCompile Include="src\TCPServer.cpp" />
-    <ClCompile Include="src\TCPSocket.cpp" />
+    <ClCompile Include="src\Network\TCPServer.cpp" />
+    <ClCompile Include="src\Network\TCPSocket.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Window\SelectionWindow.hpp" />
+    <ClInclude Include="src\Network\TCPInterface.hpp" />
     <ClInclude Include="src\NonCopyable.hpp" />
-    <ClInclude Include="src\SafeSocket.hpp" />
-    <ClInclude Include="src\TCPAcceptor.hpp" />
-    <ClInclude Include="src\TCPClient.hpp" />
-    <ClInclude Include="src\TCPResolver.hpp" />
-    <ClInclude Include="src\TCPStream.hpp" />
+    <ClInclude Include="src\Network\SafeSocket.hpp" />
+    <ClInclude Include="src\Network\TCPAcceptor.hpp" />
+    <ClInclude Include="src\Network\TCPClient.hpp" />
+    <ClInclude Include="src\Network\TCPResolver.hpp" />
+    <ClInclude Include="src\Network\TCPStream.hpp" />
     <ClInclude Include="src\UniqueResource.hpp" />
+    <ClInclude Include="src\Window\WindowInterface.hpp" />
     <ClInclude Include="src\WinSockLib.hpp" />
     <ClInclude Include="src\pch.hpp" />
-    <ClInclude Include="src\TCPServer.hpp" />
-    <ClInclude Include="src\TCPSocket.hpp" />
+    <ClInclude Include="src\Network\TCPServer.hpp" />
+    <ClInclude Include="src\Network\TCPSocket.hpp" />
+    <ClInclude Include="src\Window\WindowClass.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

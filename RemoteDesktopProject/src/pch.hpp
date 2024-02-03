@@ -8,6 +8,12 @@
 #include <WS2tcpip.h>
 #include <Windows.h>
 
+#include <d3d11.h>
+#include <dxgi1_5.h>
+#include <d2d1_1.h>
+
+#include <wrl/client.h>
+
 #include <stdexcept>
 #include <system_error>
 #include <tuple>
