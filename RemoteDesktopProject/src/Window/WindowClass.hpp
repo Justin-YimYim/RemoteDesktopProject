@@ -58,6 +58,10 @@ namespace RemoteDesk {
 			return IsZoomed(mHandle) != FALSE;
 		}
 
+		HWND GetHandle() const {
+			return mHandle;
+		}
+
 	protected:
 		WindowClass() = default;
 

@@ -25,6 +25,9 @@
     <Filter Include="Window">
       <UniqueIdentifier>{c7fc5138-be6b-4c61-9253-49af685187f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphic">
+      <UniqueIdentifier>{5a769f3a-b97a-43f5-b6ec-aefe576916ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\WinMain.cpp">
@@ -87,6 +90,15 @@
       <Filter>Window</Filter>
     </ClInclude>
     <ClInclude Include="src\Window\WindowInterface.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphic\D3D11RenderContext.hpp">
+      <Filter>Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphic\D3D11RenderTarget.hpp">
+      <Filter>Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphic\GraphicInterface.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

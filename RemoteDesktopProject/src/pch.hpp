@@ -12,6 +12,8 @@
 #include <dxgi1_5.h>
 #include <d2d1_1.h>
 
+#include <DirectXColors.h>
+
 #include <wrl/client.h>
 
 #include <stdexcept>

@@ -185,6 +185,9 @@
     <ClCompile Include="src\Network\TCPSocket.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Graphic\D3D11RenderContext.hpp" />
+    <ClInclude Include="src\Graphic\D3D11RenderTarget.hpp" />
+    <ClInclude Include="src\Graphic\GraphicInterface.hpp" />
     <ClInclude Include="src\Window\SelectionWindow.hpp" />
     <ClInclude Include="src\Network\TCPInterface.hpp" />
     <ClInclude Include="src\NonCopyable.hpp" />

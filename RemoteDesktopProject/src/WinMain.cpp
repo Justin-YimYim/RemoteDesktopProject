@@ -3,6 +3,7 @@
 #include "WinSockLib.hpp"
 #include "Network/TCPInterface.hpp"
 #include "Window/WindowInterface.hpp"
+#include "Graphic/GraphicInterface.hpp"
 
 using namespace std;
 
@@ -45,11 +46,20 @@ int WINAPI wWinMain(_In_   HINSTANCE hInstance,
 
     RemoteDesk::SelectionWindow window{};
 
+    auto context = RemoteDesk::GetD3D11RenderContext();
+
+    RemoteDesk::D3D11RenderTarget renderTarget{ window, context };
+
     MSG msg{};
 
-    while (GetMessage(&msg, nullptr, 0, 0)) {
-        TranslateMessage(&msg);
-        DispatchMessageW(&msg);
+    while (msg.message != WM_QUIT) {
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+            TranslateMessage(&msg);
+            DispatchMessageW(&msg);
+        }else {
+            context->GetD3D11DeviceContext()->ClearRenderTargetView(renderTarget.GetRenderTargetView(), DirectX::Colors::CornflowerBlue);
+            renderTarget.Present();
+        }
     }
 
     if (static_cast<int>(msg.wParam) == 0) {
