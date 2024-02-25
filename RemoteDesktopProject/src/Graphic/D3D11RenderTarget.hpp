@@ -2,16 +2,16 @@
 
 // This is the swap chain
 #ifndef D3D11RENDERTARGET
-#define D3D11RendERTARGET
+#define D3D11RENDERTARGET
 
 #include "pch.hpp"
-#include "Window/WindowClass.hpp"
 #include "D3D11RenderContext.hpp"
 
 namespace RemoteDesk {
 	class D3D11RenderTarget {
 		public:
-			D3D11RenderTarget(const WindowClass& window, const D3D11RenderContext* renderContext = GetD3D11RenderContext()) :
+			// Create SwapChain
+			D3D11RenderTarget(HWND window, const D3D11RenderContext* renderContext = GetD3D11RenderContext()) :
 				mRenderContext{ renderContext }
 			{
 				if (renderContext == nullptr) throw std::invalid_argument{ "Render context must not be nullptr" };
@@ -19,7 +19,7 @@ namespace RemoteDesk {
 				auto dxgiFactory = mRenderContext->QueryDXGIFactory();
 
 
-				HWND windowHandle = window.GetHandle();
+				HWND windowHandle = window;
 				RECT rc{};
 				GetClientRect(windowHandle, &rc);
 
@@ -40,6 +40,8 @@ namespace RemoteDesk {
 				scd.OutputWindow = windowHandle;
 				// 描述后台缓存的表面用法和CPU访问设置
 				scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+				// 較優性能
+				scd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
 
 				HRESULT hr = dxgiFactory->CreateSwapChain(mRenderContext->GetD3D11Device(), &scd, &mSwapChain);
 
@@ -66,7 +68,7 @@ namespace RemoteDesk {
 
 				// If height/ width = 0, DXGI will use the client area of the target window. 
 				mSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
-
+				
 				this->CreateBufferAndView();
 			}
 
@@ -79,6 +81,7 @@ namespace RemoteDesk {
 
 			Microsoft::WRL::ComPtr<IDXGISwapChain> mSwapChain;
 			Microsoft::WRL::ComPtr<ID3D11Texture2D> mBackBuffer;
+			//Microsoft::WRL::ComPtr<ID3D11Texture2D> mDesktopLoader;
 			Microsoft::WRL::ComPtr<ID3D11RenderTargetView> mRenderTargetView;
 	
 			void CreateBufferAndView() {

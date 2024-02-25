@@ -10,11 +10,36 @@ namespace RemoteDesk {
 
 	class SelectionWindow : public WindowClass {
 	public:
-		SelectionWindow() {
+		SelectionWindow(const D3D11RenderContext* renderContext)
+			: WindowClass (renderContext)
+		{
 			this->Create();
 
 			this->Show();
 		}
+
+		int Run() override {
+			this->Show();
+
+			MSG msg{};
+
+			while (msg.message != WM_QUIT) {
+				if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+					TranslateMessage(&msg);
+					DispatchMessageW(&msg);
+				}
+				else {
+					auto renderContext = this->GetRenderContext();
+					auto renderTarget = this->GetRenderTarget();
+
+					renderContext->GetD3D11DeviceContext()->ClearRenderTargetView(renderTarget->GetRenderTargetView(), DirectX::Colors::CornflowerBlue);
+					renderTarget->Present();
+
+				}
+			}
+
+			return static_cast<int>(msg.wParam);
+		};
 	private:
 		LRESULT WndProc(UINT msg, WPARAM wParam, LPARAM lParam) override {
 			switch (msg) 

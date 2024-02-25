@@ -5,6 +5,7 @@
 
 #include "pch.hpp"
 #include "nonCopyable.hpp"
+#include "Graphic/GraphicInterface.hpp"
 
 // run procedure:
 // 1. GetWindowClass
@@ -15,13 +16,23 @@
 namespace RemoteDesk {
 	class WindowClass : public nonCopyable<WindowClass> {
 	public:
+		WindowClass(const D3D11RenderContext* renderContext = GetD3D11RenderContext()) {
+			if (renderContext == nullptr) throw std::invalid_argument{ "Render Context must not be null." };
+
+			mRenderContext = renderContext;
+		}
+
 		WindowClass(WindowClass&& window) noexcept : mHandle{ window.mHandle } {
 			window.mHandle = nullptr;
+			mRenderContext = window.mRenderContext;
+			mRenderTarget = std::move(window.mRenderTarget);
 		}
 
 		WindowClass& operator=(WindowClass&& rhs) noexcept {
 			if (mHandle) this->Destroy();
 			mHandle = std::exchange(rhs.mHandle, nullptr);
+			mRenderContext = rhs.mRenderContext;
+			mRenderTarget = std::move(rhs.mRenderTarget);
 			return *this;
 		}
 
@@ -62,6 +73,8 @@ namespace RemoteDesk {
 			return mHandle;
 		}
 
+		virtual int Run() = 0;
+
 	protected:
 		WindowClass() = default;
 
@@ -82,10 +95,30 @@ namespace RemoteDesk {
 
 		// the process would be ran in this window class
 		virtual LRESULT WndProc(UINT msg, WPARAM wParam, LPARAM lParam) {
-			return DefWindowProcW(mHandle, msg, wParam, lParam);
+			switch (msg) {
+			case WM_DESTROY:
+				PostQuitMessage(EXIT_SUCCESS);
+				break;
+			case WM_SIZE:
+			{
+				// OutputDebugStringA("Ran WM_SIZE");
+				mRenderContext->GetD3D11DeviceContext()->OMSetRenderTargets(0, nullptr, nullptr);
+				mRenderTarget->OnWindowResized();
+
+				ID3D11RenderTargetView* renderTargets[] = { mRenderTarget->GetRenderTargetView() };
+
+				mRenderContext->GetD3D11DeviceContext()->OMSetRenderTargets(ARRAYSIZE(renderTargets), renderTargets, nullptr);
+				break;
+			}
+			default: 
+				return DefWindowProcW(mHandle, msg, wParam, lParam);
+			}
+
+			return LRESULT{ 0 };
 		}
 
 		// Create a real Window screen
+		// During Create it will automatically create a unique D3D11RenderTarget
 		void Create(
 			const std::wstring& title = L"",
 			int width = 800,
@@ -119,14 +152,26 @@ namespace RemoteDesk {
 
 			if (mHandle == nullptr)
 				throw std::runtime_error{ "Fail to create window." };
+
+			mRenderTarget = std::make_unique<D3D11RenderTarget>(mHandle, mRenderContext);
 		}
 
 		inline void Destroy() {
 			if (mHandle) DestroyWindow(mHandle);
 		}
 
+		D3D11RenderTarget* GetRenderTarget() {
+			return mRenderTarget.get();
+		}
+
+		const D3D11RenderContext* GetRenderContext() {
+			return mRenderContext;
+		}
+
 	private:
 		HWND mHandle{ nullptr };
+		std::unique_ptr<D3D11RenderTarget> mRenderTarget{ };
+		const D3D11RenderContext* mRenderContext{ };
 
 		inline static WindowClass* sInitializer{ nullptr };
 

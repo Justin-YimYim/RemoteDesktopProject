@@ -101,6 +101,9 @@
     <ClInclude Include="src\Graphic\GraphicInterface.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Graphic\DesktopScreenLoader.hpp">
+      <Filter>Graphic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

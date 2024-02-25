@@ -44,33 +44,18 @@ int WINAPI wWinMain(_In_   HINSTANCE hInstance,
     std::ofstream file("file.txt", std::ios::binary);
     file.write((char*)pageData.data(), 1024 * 20);*/
 
-    RemoteDesk::SelectionWindow window{};
+    auto renderContext = RemoteDesk::GetD3D11RenderContext();
 
-    auto context = RemoteDesk::GetD3D11RenderContext();
+    RemoteDesk::SelectionWindow window{ renderContext };
 
-    RemoteDesk::D3D11RenderTarget renderTarget{ window, context };
+    int result = window.Run();
 
     MSG msg{};
 
-    while (msg.message != WM_QUIT) {
-        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
-            TranslateMessage(&msg);
-            DispatchMessageW(&msg);
-        }else {
-            context->GetD3D11DeviceContext()->ClearRenderTargetView(renderTarget.GetRenderTargetView(), DirectX::Colors::CornflowerBlue);
-            renderTarget.Present();
-        }
-    }
+    if (result == 0) {
+        RemoteDesk::SelectionWindow window2{ renderContext };
 
-    if (static_cast<int>(msg.wParam) == 0) {
-        RemoteDesk::SelectionWindow window{};
-
-        MSG msg{};
-
-        while (GetMessage(&msg, nullptr, 0, 0)) {
-            TranslateMessage(&msg);
-            DispatchMessageW(&msg);
-        }
+        window2.Show();
     }
 
     return static_cast<int>(msg.wParam);

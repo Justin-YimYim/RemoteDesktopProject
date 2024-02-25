@@ -10,6 +10,7 @@ namespace RemoteDesk {
 	// Initialization of D3D11
 	class D3D11RenderContext {
 	public:
+		// Create interface
 		D3D11RenderContext() {
 			this->CreateD3D11Devices();
 		}
@@ -37,6 +38,21 @@ namespace RemoteDesk {
 			if (FAILED(hr)) throw std::runtime_error{ "Failed to get DXGI factory from DXGI adapter." };
 
 			return dxgiFactory;
+		}
+
+		inline Microsoft::WRL::ComPtr<IDXGIAdapter> QueryDXGIAdapter() const {
+			using Microsoft::WRL::ComPtr;
+
+			ComPtr<IDXGIDevice> dxgiDevice{};
+			HRESULT hr = mD3D11Device.As(&dxgiDevice);
+
+			if (FAILED(hr)) throw std::runtime_error{ "Failed to query DXGI device." };
+
+			ComPtr<IDXGIAdapter> dxgiAdapter{};
+			hr = dxgiDevice->GetAdapter(&dxgiAdapter);
+
+			if (FAILED(hr)) throw std::runtime_error{ "Failed to get DXGI adaptor from DXGI device" };
+			return dxgiAdapter;
 		}
 		
 		inline ID3D11Device* GetD3D11Device() const {
